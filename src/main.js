@@ -1,5 +1,5 @@
 import './style.css'
-
+import {io} from "socket.io-client";
 import Hls from 'hls.js'
 
 const video = document.getElementById('video');
@@ -21,3 +21,12 @@ if (Hls.isSupported()) {
 } else{
     alert("Your browser doesn't support HLS playback")
 }
+
+const socket = io('http://localhost:3001')
+
+socket.on('message', (msg) => {
+    const messageContainer = document.getElementById('messages');
+    const newMessage = document.createElement('p');
+    newMessage.textContent = msg;
+    messageContainer.appendChild(newMessage);
+})
