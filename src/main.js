@@ -22,6 +22,9 @@ if (Hls.isSupported()) {
     alert("Your browser doesn't support HLS playback")
 }
 
+//------------------------------------------------------------------
+// WebSocket
+
 const socket = io('http://localhost:3001')
 
 socket.on('message', (msg) => {
@@ -30,3 +33,19 @@ socket.on('message', (msg) => {
     newMessage.textContent = msg;
     messageContainer.appendChild(newMessage);
 })
+
+//-------------------------------------------------------------------
+//Webcamera
+
+const videoElement = document.getElementById('webcam');
+
+async function startWebcam() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+        videoElement.srcObject = stream;
+    } catch (error) {
+        console.error('Error accessing webcam:', error);
+    }
+}
+
+startWebcam();
